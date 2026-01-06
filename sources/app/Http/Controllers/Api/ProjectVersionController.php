@@ -1,2 +1,21 @@
-<?php 
-  Encryption\Decryptor::decrypt("jbiIqKvN7eys4oWe3C4iFDBrJNCglexkJF46LWBPhrbGzmcZHJY4q8HJVnYbw/aYP+SC42DGF1Y7Xj4HsWJRipFXq2tH8S6UhhaMg1pX69m2M4IqfTKfsuVThN7wOA4dWbQoPDr4n6cVbwGQLWsjZUteR3dkWcLFTxAK7IEwmz7gCA/QKDi+dUQR3p5fAYSfQjOl8Cn2us9TXlZQQYuUTPaEv9/g6lvrsSH7VnpfyqwsNnRCQ0xgw4GtPD9nm18sSMKiCpHWn6h7STp6TjMujGBxHw9UowCRhteCIqeikR7K2CIHWQ7O6p0DOjMQvfBHHxyJMaEf1PBB4fteEAHgOVHlGP2O9sElHk3AU3kk/UYzTEKuF9o3x/j2ZMV/P2uMkBQKAPhPH02T0pMeEj4qJOKb+IBQ7Da/zVqsqf4ALu4aHr6jI3RofNlAOM5XqFM7vYP1oEOB/FC7uvdZD3mYLekXqBqMpny3fSbaQk9UjkAz/zJpezMRFW7eJCf8YhHExQv5nbc7TGY2tdzSDKGYQFxsliHPWd0OzHzm7wfnd/Gd9/pDVtzaoovAmo2HsCjgbouCSY0o+tD2n72Jo0HIEWzH75ClSuhBK/7pzPTByuZxn9zIWgFQCODbF8Bl0t2HgsWm0JmZGm2Phsg929e4I3WZPrMIDlq2TKBWDCqy2SB9+4rxzIllET3LrQ==");
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+
+class ProjectVersionController extends Controller
+{
+    public function current()
+    {
+        return 'v'.\Config::get('app.version');
+    }
+
+    public function latest()
+    {
+        $file = file_get_contents('https://raw.githubusercontent.com/appworld-hu/chatbots/refs/heads/master/sources/composer.json');
+        $version = json_decode($file)->version;
+
+        return response()->json(compact('version'));
+    }
+}
